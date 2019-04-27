@@ -1,7 +1,10 @@
 import java.util.NoSuchElementException;
+import java.util.Arrays;
 public class MyHeap{
   public static void main(String[] args){
-    //for testing purposes
+    int[] eg = {14,32,23,4,17,1,23};
+    pushDown(eg,5,0);
+    System.out.println(Arrays.toString(eg));
   }
   private static void swap(int a,int b,int[] data){
     int temp = data[a];
@@ -25,17 +28,21 @@ public class MyHeap{
       try{
         //there are two children, so comparison is necessary
         int b = getChildB(index,size);
-        if(data[b] > data[a]){
-          swap(index,b,data);
-          pushDown(data,size,b);
-        }else{
-          swap(index,a,data);
-          pushDown(data,size,a);
+        if(data[index] < data[a] || data[index] < data[b]){
+          if(data[b] > data[a]){
+            swap(index,b,data);
+            pushDown(data,size,b);
+          }else{
+            swap(index,a,data);
+            pushDown(data,size,a);
+          }
         }
       }catch(NoSuchElementException e){
         //no child for second, special case of only one child
-        swap(index,a,data);
-        pushDown(data,size,a);
+        if(data[index] < data[a]){
+          swap(index,a,data);
+          pushDown(data,size,a);
+        }
       }
     }catch(NoSuchElementException e){
       //no children at all, pushDown is complete (do nothing)
