@@ -69,7 +69,11 @@ public class MyHeap{
     }
   }
   public static void heapsort(int[] data){
-
+    heapify(data);
+    for(int i=data.length-1;i>0;i--){
+      swap(0,i,data);
+      pushDown(data,i,0);
+    }
   }
 
   //for testing purposes
