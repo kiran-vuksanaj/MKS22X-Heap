@@ -5,6 +5,9 @@ public class MyHeap{
     int[] eg = {14,32,23,4,17,1,23};
     pushDown(eg,5,0);
     System.out.println(Arrays.toString(eg));
+    int[] eg2 = {100,56,34,55,55,77,1,9,2,3,3,3,3};
+    pushUp(eg2,5);
+    System.out.println(Arrays.toString(eg2));
   }
   private static void swap(int a,int b,int[] data){
     int temp = data[a];
@@ -57,7 +60,9 @@ public class MyHeap{
     }
   }
   public static void heapify(int[] data){
-
+    for(int i=data.length-1;i>=0;i++){
+      pushDown(data,data.length,i);
+    }
   }
   public static void heapsort(int[] data){
 
