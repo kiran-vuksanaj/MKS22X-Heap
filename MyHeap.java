@@ -8,6 +8,9 @@ public class MyHeap{
     int[] eg2 = {100,56,34,55,55,77,1,9,2,3,3,3,3};
     pushUp(eg2,5);
     System.out.println(Arrays.toString(eg2));
+    int[] randAry = randArray(25,100);
+    heapify(randAry);
+    System.out.println(Arrays.toString(randAry));
   }
   private static void swap(int a,int b,int[] data){
     int temp = data[a];
@@ -26,6 +29,7 @@ public class MyHeap{
     return (index - 1) / 2;
   }
   private static void pushDown(int[] data,int size,int index){
+    //System.out.println("PD "+index);
     try{
       int a = getChildA(index,size);
       try{
@@ -60,11 +64,20 @@ public class MyHeap{
     }
   }
   public static void heapify(int[] data){
-    for(int i=data.length-1;i>=0;i++){
+    for(int i=data.length-1;i>=0;i--){
       pushDown(data,data.length,i);
     }
   }
   public static void heapsort(int[] data){
 
+  }
+
+  //for testing purposes
+  private static int[] randArray(int length,int max){
+    int[] out = new int[length];
+    for(int i=0;i<length;i++){
+      out[i] = (int)(Math.random()*max);
+    }
+    return out;
   }
 }
