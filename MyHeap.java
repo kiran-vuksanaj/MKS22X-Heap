@@ -49,7 +49,12 @@ public class MyHeap{
     }
   }
   private static void pushUp(int[] data,int index){
-
+    int p = getParent(index);
+    while(data[p] < data[index]){
+      swap(p,index,data);
+      index = p;
+      p = getParent(index);
+    }
   }
   public static void heapify(int[] data){
 
