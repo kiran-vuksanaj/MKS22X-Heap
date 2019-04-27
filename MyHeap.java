@@ -20,50 +20,29 @@ public class MyHeap{
     data[a] = data[b];
     data[b] = temp;
   }
-  private static int getChildA(int index,int size){
-    if(index*2+1 < size) return index*2+1;
-    throw new NoSuchElementException("no child");
-  }
-  private static int getChildB(int index,int size){
-    if(index*2 + 2 < size) return index*2 + 2;
-    throw new NoSuchElementException("no second child");
-  }
-  private static int getParent(int index){
-    return (index - 1) / 2;
+  private static boolean inPlace(int[] data,int index,int size){
+    return index*2 >= size || //has no children
+           (index*2 + 2 == size && (data[index*2 + 1] <= data[index])) || //one child, but in place
+           (index*2 + 2 < size &&
+              data[index*2 + 1] <= data[index] &&
+              data[index*2 + 2] <= data[index]);//two children, both are <= to it
   }
   private static void pushDown(int[] data,int size,int index){
-    //System.out.println("PD "+index);
-    try{
-      int a = getChildA(index,size);
-      try{
-        //there are two children, so comparison is necessary
-        int b = getChildB(index,size);
-        if(data[index] < data[a] || data[index] < data[b]){
-          if(data[b] > data[a]){
-            swap(index,b,data);
-            pushDown(data,size,b);
-          }else{
-            swap(index,a,data);
-            pushDown(data,size,a);
-          }
-        }
-      }catch(NoSuchElementException e){
-        //no child for second, special case of only one child
-        if(data[index] < data[a]){
-          swap(index,a,data);
-          pushDown(data,size,a);
-        }
+    while(!inPlace(data,index,size)){//guarantees has a child greater than it
+      int largestChild = index*2 + 1;//safe since has at least one child
+      if(index*2 + 2 < size && data[index*2 + 2] > data[largestChild]){//two children and second > first
+        largestChild = index*2 + 2;
       }
-    }catch(NoSuchElementException e){
-      //no children at all, pushDown is complete (do nothing)
+      swap(index,largestChild,data);
+      index = largestChild;
     }
   }
   private static void pushUp(int[] data,int index){
-    int p = getParent(index);
+    int p = (index-1)>>1;
     while(data[p] < data[index]){
       swap(p,index,data);
       index = p;
-      p = getParent(index);
+      p = (index-1)>>1;
     }
   }
   public static void heapify(int[] data){
