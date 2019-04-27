@@ -9,6 +9,7 @@ public class MyHeap{
     pushUp(eg2,5);
     System.out.println(Arrays.toString(eg2));
     int[] randAry = randArray(25,100);
+    System.out.println(Arrays.toString(randAry));
     heapify(randAry);
     System.out.println(Arrays.toString(randAry));
     int[] rand2 = randArray(25,100);
@@ -21,7 +22,8 @@ public class MyHeap{
     data[b] = temp;
   }
   private static boolean inPlace(int[] data,int index,int size){
-    return index*2 >= size || //has no children
+    //System.out.println("ip "+index+" "+size);
+    return index*2+1 >= size || //has no children
            (index*2 + 2 == size && (data[index*2 + 1] <= data[index])) || //one child, but in place
            (index*2 + 2 < size &&
               data[index*2 + 1] <= data[index] &&
@@ -33,6 +35,7 @@ public class MyHeap{
       if(index*2 + 2 < size && data[index*2 + 2] > data[largestChild]){//two children and second > first
         largestChild = index*2 + 2;
       }
+      //System.out.println(largestChild+" "+size+" "+data.length);
       swap(index,largestChild,data);
       index = largestChild;
     }
