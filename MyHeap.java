@@ -11,6 +11,9 @@ public class MyHeap{
     int[] randAry = randArray(25,100);
     heapify(randAry);
     System.out.println(Arrays.toString(randAry));
+    int[] rand2 = randArray(25,100);
+    heapsort(rand2);
+    System.out.println(Arrays.toString(rand2));
   }
   private static void swap(int a,int b,int[] data){
     int temp = data[a];
